@@ -63,6 +63,25 @@ function toggleTask(index) {
     displayTasks();
 }
 
+function editTask(index) {
+    const todoItem = document.getElementById(`todo-${index}`);
+    const currentText = todo[index].text;
+    const inputElement = document.createElement("input");
+    
+    inputElement.value = currentText;
+    todoItem.replaceWith(inputElement);
+    inputElement.focus();
+
+    inputElement.addEventListener("blur", () => {
+        const updatedText = inputElement.value.trim();
+        if (updatedText) {
+            todo[index].text =  updatedText;
+            savetoLocalStorage();
+        }
+        displayTasks();
+    });
+}
+
 function deleteAllTasks() {
     todo = [];
     savetoLocalStorage();
