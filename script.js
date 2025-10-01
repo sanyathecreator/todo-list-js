@@ -57,6 +57,12 @@ function displayTasks() {
     });
 }
 
+function toggleTask(index) {
+    todo[index].disabled = !todo[index].disabled;
+    savetoLocalStorage();
+    displayTasks();
+}
+
 function savetoLocalStorage() {
     localStorage.setItem("todo", JSON.stringify(todo));
 }
