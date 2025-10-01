@@ -63,6 +63,12 @@ function toggleTask(index) {
     displayTasks();
 }
 
+function deleteAllTasks() {
+    todo = [];
+    savetoLocalStorage();
+    displayTasks();
+}
+
 function savetoLocalStorage() {
     localStorage.setItem("todo", JSON.stringify(todo));
 }
