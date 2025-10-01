@@ -55,6 +55,7 @@ function displayTasks() {
         });
         todoList.appendChild(p);
     });
+    todoCount.textContent = todo.length;
 }
 
 function toggleTask(index) {
