@@ -94,6 +94,11 @@ input[type="text"]::placeholder {
     display: flex;
     align-items: center;
     gap: 1rem;
+    max-width: 90%;
+    word-wrap: break-word;      /* Перенос длинных слов */
+    word-break: break-word;     /* Перенос по словам */
+    white-space: normal;        /* Разрешить перенос строк */
+    overflow-wrap: break-word;  /* Современное свойство для переноса */
 }
 
 ul {
