@@ -83,8 +83,16 @@ input[type="text"]::placeholder {
     color: var(--grey);
 }
 
+.todo-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
 .todo-container {
     display: flex;
+    align-items: center;
     gap: 1rem;
 }
 
@@ -129,7 +137,7 @@ input[type="checkbox"]::before {
     display: inline-block;
     width: 2rem;
     height: 2rem;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     text-align: center;
     border: 0.06rem solid var(--grey-border);
     border-radius: 50%;
@@ -141,6 +149,17 @@ input[type="checkbox"]:checked::before {
     background-color: var(--green);
     border: 0.06rem solid var(--green);
     border-radius: 50%;
+}
+
+.delete-button {
+    border: none;
+    border-radius: 50%;
+    background-color: var(--grey);
+    color: var(--white);
+    font-size: 1.3rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
 }
 
 .counter {
