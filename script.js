@@ -1,101 +1,36 @@
-// Retrieve todo from local storage or initialize an empty array
-let todo = JSON.parse(localStorage.getItem("todo")) || [];
-const todoInput = document.getElementById("todoInput");
-const todoList = document.getElementById("todoList");
-const todoCount = document.getElementById("todoCount");
-const addButton = document.querySelector(".btn");
-const deleteButton = document.getElementById("deleteButton");
+// 
+document.addEventListener("DOMContentLoaded", () => {
+    const taskInput = document.getElementById("task-input");
+    const addTaskButton = document.getElementById("add-task-button");
+    const taskList = document.getElementById("task-list");
+    const emptyImage = document.querySelector(".empty-image");
 
-// Initialize
-document.addEventListener("DOMContentLoaded", function () {
-    addButton.addEventListener("click", addTask);
-    todoInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            addTask();
-        }
-    });
-    deleteButton.addEventListener("click", deleteAllTasks);
-    displayTasks();
-});
-
-function addTask() {
-    const newTask = todoInput.value.trim();
-    if (newTask) {
-        todo.push({
-            text: newTask,
-            disabled: false,
-        });
-        savetoLocalStorage();
-        todoInput.value = "";
-        displayTasks();
+    const toggleEmptyState = () => {
+        emptyImage.style.display = taskList.children.length === 0 ? "block" : "none";
     }
-}
 
-function displayTasks() {
-    todoList.innerHTML = "";
-    todo.forEach((item, index) => {
-        const p = document.createElement("p");
-        p.innerHTML = `
-            <div class="todo-box">
-                <div class="todo-container">
-                    <input type="checkbox" class="todo-checkbox" id="input-${index}" ${
-                item.disabled ? "checked" : ""
-            } />
-                    <p id="todo-${index}" class="${
-                item.disabled ? "disabled" : ""
-            }" onclick="editTask(${index})">
-                        ${item.text}
-                    </p>
-                </div>
-                <button class="delete-button" onclick="deleteTask(${index})">x</button>
-            </div>
-        `;
-        p.querySelector(".todo-checkbox").addEventListener("change", () => {
-            toggleTask(index);
-        });
-        todoList.appendChild(p);
-    });
-    todoCount.textContent = todo.length;
-}
-
-function toggleTask(index) {
-    todo[index].disabled = !todo[index].disabled;
-    savetoLocalStorage();
-    displayTasks();
-}
-
-function editTask(index) {
-    const todoItem = document.getElementById(`todo-${index}`);
-    const currentText = todo[index].text;
-    const inputElement = document.createElement("input");
-    
-    inputElement.value = currentText;
-    todoItem.replaceWith(inputElement);
-    inputElement.focus();
-
-    inputElement.addEventListener("blur", () => {
-        const updatedText = inputElement.value.trim();
-        if (updatedText) {
-            todo[index].text =  updatedText;
-            savetoLocalStorage();
+    const addTask = (event) => {
+        event.preventDefault();
+        const taskText = taskInput.value.trim();
+        if (!taskText) {
+            return;
         }
-        displayTasks();
+
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+        <input type="checkbox" class="task-checkbox"/>
+        <span>${taskText}</span>
+        `;
+
+        taskList.appendChild(listItem);
+        taskInput.value = "";
+        toggleEmptyState();
+    };
+
+    addTaskButton.addEventListener("click", addTask);
+    taskInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            addTask(event);
+        }
     });
-}
-
-function deleteTask(index) {
-    todo.splice(index, 1);
-    savetoLocalStorage();
-    displayTasks();
-}
-
-function deleteAllTasks() {
-    todo = [];
-    savetoLocalStorage();
-    displayTasks();
-}
-
-function savetoLocalStorage() {
-    localStorage.setItem("todo", JSON.stringify(todo));
-}
+});

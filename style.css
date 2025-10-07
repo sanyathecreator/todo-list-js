@@ -90,10 +90,60 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 #task-list {
     width: 100%;
+}
+
+#task-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.2);
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    position: relative;
+    transition: box-shadow 0.2s ease;
+}
+
+#task-list li:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#task-list li .task-checkbox {
+    min-width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    border-radius: 50%;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#task-list li .task-checkbox:checked {
+    background: #876af5;
+    transform: scale(1.1);
+}
+
+#task-list li .task-checkbox:checked::before {
+    content: '\2713';
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+#task-list li span {
+    flex: 1;
+    margin-left: 10px;
+    word-wrap: break-word;
 }
 
 .empty-image {
