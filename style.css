@@ -87,6 +87,7 @@ h1 {
 }
 
 .tasks-container {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -144,6 +145,32 @@ h1 {
     flex: 1;
     margin-left: 10px;
     word-wrap: break-word;
+}
+
+.task-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: auto; /* Buttons will align to the left */
+}
+
+.task-buttons button {
+    background: rgba(255, 194, 209, 0.3);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-buttons button:hover {
+    background: rgba(255, 194, 209, 0.1);
+    transform: scale(1.2);
 }
 
 .empty-image {
