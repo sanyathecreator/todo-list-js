@@ -12,6 +12,21 @@ document.addEventListener("DOMContentLoaded", () => {
         tasksContainer.style.width = taskList.children.length === 0 ? "50%" : "100%";
     }
 
+    const saveTasksToLocalStorage = () => {
+        const tasks = Array.from(taskList.querySelectorAll("li")).map(li => ({
+            text: li.querySelector("span").textContent,
+            completed: li.querySelector(".task-checkbox").checked
+        }));
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        console.log("Tasks saved to localStorage:", tasks);
+    };
+
+    const loadTasksFromLocalStorage = () => {
+        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks.forEach(task => addTask(task.text, task.completed));
+        toggleEmptyState();
+    };
+
     const addTask = (text, completed = false) => {
         // If text is provided (for editing), use it; otherwise, use input value
         const taskText = text || taskInput.value.trim();
@@ -48,24 +63,28 @@ document.addEventListener("DOMContentLoaded", () => {
             editButton.disabled = isChecked;
             editButton.style.opacity = isChecked ? "0.5" : "1";
             editButton.style.pointerEvents = isChecked ? "none" : "auto";
+            saveTasksToLocalStorage();
         });
 
         editButton.addEventListener("click", () => {
             if (!checkbox.checked) {
                 taskInput.value = listItem.querySelector("span").textContent;
                 listItem.remove();
-
+                toggleEmptyState();
+                saveTasksToLocalStorage();
             }
         });
 
         listItem.querySelector(".delete-button").addEventListener("click", () => {
             taskList.removeChild(listItem);
             toggleEmptyState();
+            saveTasksToLocalStorage();
         });
 
         taskList.appendChild(listItem);
         taskInput.value = "";
         toggleEmptyState();
+        saveTasksToLocalStorage();
     };
 
     addTaskButton.addEventListener("click", () => addTask);
@@ -74,5 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             addTask();
         }
+        loadTasksFromLocalStorage();
     });
 });
