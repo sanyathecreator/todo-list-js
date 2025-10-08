@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
 
 * {
     margin: 0;
@@ -133,7 +133,7 @@ h1 {
 }
 
 #task-list li .task-checkbox:checked::before {
-    content: '\2713';
+    content: "\2713";
     color: #fff;
     display: flex;
     justify-content: center;
@@ -144,7 +144,7 @@ h1 {
 #task-list li span {
     flex: 1;
     margin-left: 10px;
-    word-wrap: break-word;
+    overflow-wrap: anywhere;
 }
 
 .task-buttons {
