@@ -18,16 +18,17 @@ document.addEventListener("DOMContentLoaded", () => {
             completed: li.querySelector(".task-checkbox").checked
         }));
         localStorage.setItem("tasks", JSON.stringify(tasks));
-        console.log("Tasks saved to localStorage:", tasks);
     };
 
     const loadTasksFromLocalStorage = () => {
         const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        tasks.forEach(task => addTask(task.text, task.completed));
+        tasks.forEach(task => addTask(text = task.text, completed = task.completed));
         toggleEmptyState();
     };
 
-    const addTask = (text, completed = false) => {
+    const addTask = (event, text, completed = false) => {
+        event.preventDefault();
+
         // If text is provided (for editing), use it; otherwise, use input value
         const taskText = text || taskInput.value.trim();
         if (!taskText) {
@@ -87,12 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
         saveTasksToLocalStorage();
     };
 
-    addTaskButton.addEventListener("click", () => addTask);
+    addTaskButton.addEventListener("click", (event) => addTask(event));
     taskInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
-            event.preventDefault();
-            addTask();
+            addTask(event);
         }
-        loadTasksFromLocalStorage();
     });
 });
