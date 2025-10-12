@@ -20,16 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
         addTask(event);
     });
 
-    // Also disable edit button when checkbox is checked/unchecked
-    checkbox.addEventListener("change", () => {
-        const isChecked = checkbox.checked;
-        listItem.classList.toggle("completed", isChecked);
-        editButton.disabled = isChecked;
-        editButton.style.opacity = isChecked ? "0.5" : "1";
-        editButton.style.pointerEvents = isChecked ? "none" : "auto";
-        saveTasksToLocalStorage();
-    });
-
     editButton.addEventListener("click", () => {
         if (!checkbox.checked) {
             taskInput.value = listItem.querySelector("span").textContent;
@@ -37,12 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
             toggleEmptyState();
             saveTasksToLocalStorage();
         }
-    });
-
-    listItem.querySelector(".delete-button").addEventListener("click", () => {
-        taskList.removeChild(listItem);
-        toggleEmptyState();
-        saveTasksToLocalStorage();
     });
 });
 
@@ -64,22 +48,6 @@ function saveTasksToLocalStorage() {
     toggleEmptyState();
 } */
 
-function toggleTaskCompletion(index) {
-    tasks[index].completed = !tasks[index].completed;
-    const checkbox = tasks[index].querySelector(".task-checkbox");
-    const editButton = tasks[index].querySelector(".edit-button");
-    // Disable edit button if task is completed
-    /*
-    if (tasks[index].completed) {
-        tasks[index].completed = !tasks[index].completed;
-        editButton.disabled = true;
-        editButton.style.opacity = 0.5;
-        editButton.style.pointerEvents = "none";
-    }
-    */
-    saveTasksToLocalStorage();
-    displayTasks();
-}
 
 function displayTasks() {
     taskList.innerHTML = "";
@@ -95,11 +63,21 @@ function displayTasks() {
             <button class="delete-button"><i onClick="deleteTask(${index})" class="fa-solid fa-trash"></i></button>
         </div>
         `;
-        listItem
-            .querySelector(".task-checkbox")
-            .addEventListener("change", () => {
-                toggleTaskCompletion(index);
-            });
+
+        const checkbox = listItem.querySelector(".task-checkbox");
+        const editButton = listItem.querySelector(".edit-button");
+        checkbox.addEventListener("change", () => {
+            item.completed = checkbox.checked;
+
+            // Disable/enable edit button
+            editButton.disabled = item.completed;
+            editButton.style.opacity = item.completed ? "0.5" : "1";
+            editButton.style.pointerEvents = item.completed ? "none" : "auto";
+
+            listItem.classList.toggle("completed", item.completed);
+            saveTasksToLocalStorage();
+        });
+
         taskList.appendChild(listItem);
     });
 }
