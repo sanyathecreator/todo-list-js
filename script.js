@@ -54,12 +54,13 @@ function displayTasks() {
     tasks.forEach((item, index) => {
         // Create task item
         const listItem = document.createElement("li");
+        listItem.id = `task-${index}`;
         listItem.innerHTML = `
         <input type="checkbox" class="task-checkbox" ${item.completed ? "checked" : ""
             }/>
         <span>${item.text}</span>
         <div class="task-buttons">
-            <button class="edit-button"><i class="fa-solid fa-pen"></i></button>
+            <button class="edit-button" onClick="editTask(${index})"><i class="fa-solid fa-pen"></i></button>
             <button class="delete-button"><i onClick="deleteTask(${index})" class="fa-solid fa-trash"></i></button>
         </div>
         `;
@@ -96,6 +97,34 @@ function deleteTask(index) {
 function deleteAllTasks() {
     tasks = [];
     updateState();
+}
+
+function editTask(index) {
+    const taskItem = document.getElementById(`task-${index}`);
+    const currentText = tasks[index].text;
+    const inputElement = document.createElement("input");
+
+    inputElement.value = currentText;
+    taskItem.replaceWith(inputElement);
+    inputElement.focus();
+
+    const updateTaskText = () => {
+        const updatedText = inputElement.value.trim();
+        if (updatedText) {
+            tasks[index].text = updatedText;
+            saveTasksToLocalStorage();
+        }
+        displayTasks();
+    };
+
+    // Listen when inputElement lose focus
+    inputElement.addEventListener("blur", updateTaskText);
+
+    inputElement.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            updateTaskText();
+        }
+    });
 }
 
 function addTask(event, completed = false) {
