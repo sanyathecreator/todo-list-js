@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // Change the view when task list is empty or not
 function toggleEmptyState() {
     emptyImage.style.display =
-        taskList.children.length === 0 ? "block" : "none";
+        tasks.length === 0 ? "block" : "none";
     tasksContainer.style.width =
-        taskList.children.length === 0 ? "50%" : "100%";
+        tasks.length === 0 ? "50%" : "100%";
 }
 
 function saveTasksToLocalStorage() {
@@ -87,13 +87,12 @@ function displayTasks() {
         // Create task item
         const listItem = document.createElement("li");
         listItem.innerHTML = `
-        <input type="checkbox" class="task-checkbox" ${
-            item.completed ? "checked" : ""
-        }/>
+        <input type="checkbox" class="task-checkbox" ${item.completed ? "checked" : ""
+            }/>
         <span>${item.text}</span>
         <div class="task-buttons">
             <button class="edit-button"><i class="fa-solid fa-pen"></i></button>
-            <button class="delete-button"><i class="fa-solid fa-trash"></i></button>
+            <button class="delete-button"><i onClick="deleteTask(${index})" class="fa-solid fa-trash"></i></button>
         </div>
         `;
         listItem
@@ -103,6 +102,20 @@ function displayTasks() {
             });
         taskList.appendChild(listItem);
     });
+}
+
+function deleteTask(index) {
+    tasks.splice(index, 1);
+    saveTasksToLocalStorage();
+    displayTasks();
+    toggleEmptyState();
+}
+
+function deleteAllTasks() {
+    tasks = [];
+    saveTasksToLocalStorage();
+    displayTasks();
+    toggleEmptyState();
 }
 
 function addTask(event, completed = false) {
