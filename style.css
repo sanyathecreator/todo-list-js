@@ -36,7 +36,8 @@ body {
     border-radius: 20px;
     box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
     border: 3px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px); /* Blurs the background */
+    backdrop-filter: blur(10px);
+    /* Blurs the background */
 }
 
 h1 {
@@ -150,7 +151,8 @@ h1 {
 .task-buttons {
     display: flex;
     gap: 10px;
-    margin-right: auto; /* Buttons will align to the left */
+    margin-right: auto;
+    /* Buttons will align to the left */
 }
 
 .task-buttons button {
@@ -175,4 +177,16 @@ h1 {
 
 .empty-image {
     width: 40%;
+}
+
+.edit-task-input {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+    padding: 8px 15px;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 10px;
 }

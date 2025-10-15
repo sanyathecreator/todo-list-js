@@ -104,6 +104,7 @@ function editTask(index) {
     const currentText = tasks[index].text;
     const inputElement = document.createElement("input");
 
+    inputElement.className = "edit-task-input";
     inputElement.value = currentText;
     taskItem.replaceWith(inputElement);
     inputElement.focus();
