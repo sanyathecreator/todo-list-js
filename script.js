@@ -19,15 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addTaskButton.addEventListener("click", (event) => {
         addTask(event);
     });
-
-    /*editButton.addEventListener("click", () => {
-        if (!checkbox.checked) {
-            taskInput.value = listItem.querySelector("span").textContent;
-            listItem.remove();
-            toggleEmptyState();
-            saveTasksToLocalStorage();
-        }
-    }); */
 });
 
 // Change the view when task list is empty or not
@@ -41,13 +32,6 @@ function toggleEmptyState() {
 function saveTasksToLocalStorage() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
-
-/* function loadTasksFromLocalStorage() {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks.forEach(task => addTask(text = task.text, completed = task.completed));
-    toggleEmptyState();
-} */
-
 
 function displayTasks() {
     taskList.innerHTML = "";
